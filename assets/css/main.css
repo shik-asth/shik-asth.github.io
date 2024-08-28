@@ -1257,6 +1257,25 @@ a.image {
     -ms-transform: scale(1.075);
     transform: scale(1.075); }
 
+.image-cropper {
+      width: 200px; /* Set the desired width */
+      height: 400px; /* Set the desired height */
+      overflow: hidden; /* Hide the overflow */
+      position: relative;
+  }
+  
+.image-cropper img {
+      position: absolute;
+      top: 10px; /* Adjust the top position to crop */
+      right: -80px; /* Adjust the left position to crop */
+      
+      width: 100%; /* Ensure the image scales proportionally */
+      height: 100%; /* Ensure the image scales proportionally */
+       transform: scale(2); /* Scale the image to make it larger */
+      transform-origin: center; /* Scale from the center of the image */
+
+      max-width: none; /* Override default max-width */
+  }
 /* List */
 ol {
   list-style: decimal;
