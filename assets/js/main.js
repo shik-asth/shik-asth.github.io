@@ -4,50 +4,52 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-(function($) {
+(function main() {
 
-	var	$window = $(window),
-		$head = $('head'),
-		$body = $('body');
+    var $window = $(window),
+        $head = $('head'),
+        $body = $('body');
 
-	// Breakpoints.
-		breakpoints({
-			xlarge:   [ '1281px',  '1680px' ],
-			large:    [ '981px',   '1280px' ],
-			medium:   [ '737px',   '980px'  ],
-			small:    [ '481px',   '736px'  ],
-			xsmall:   [ '361px',   '480px'  ],
-			xxsmall:  [ null,      '360px'  ],
-			'xlarge-to-max':    '(min-width: 1681px)',
-			'small-to-xlarge':  '(min-width: 481px) and (max-width: 1680px)'
-		});
+    // Breakpoints.
+    breakpoints({
+        xlarge: ['1281px', '1680px'],
+        large: ['981px', '1280px'],
+        medium: ['737px', '980px'],
+        small: ['481px', '736px'],
+        xsmall: ['361px', '480px'],
+        xxsmall: [null, '360px'],
+        'xlarge-to-max': '(min-width: 1681px)',
+        'small-to-xlarge': '(min-width: 481px) and (max-width: 1680px)'
+    });
 
-	// Stops animations/transitions until the page has ...
+    // Stops animations/transitions until the page has loaded.
+    $window.on('load', function () {
+        window.setTimeout(function () {
+            $body.removeClass('is-preload');
+        }, 100);
+    });
 
-		// ... loaded.
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-preload');
-				}, 100);
-			});
+    // Resize logic.
+    var resizeTimeout;
+    $window.on('resize', function () {
+        $body.addClass('is-resizing');
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function () {
+            $body.removeClass('is-resizing');
+        }, 100);
+    });
 
-		// ... stopped resizing.
-			var resizeTimeout;
+    // Sidebar.
+    var $sidebar = $('#sidebar'),
+        $sidebar_inner = $sidebar.children('.inner');
 
-			$window.on('resize', function() {
+    breakpoints.on('<=large', function () {
+        $sidebar.addClass('inactive');
+    });
 
-				// Mark as resizing.
-					$body.addClass('is-resizing');
-
-				// Unmark after delay.
-					clearTimeout(resizeTimeout);
-
-					resizeTimeout = setTimeout(function() {
-						$body.removeClass('is-resizing');
-					}, 100);
-
-			});
-
+    breakpoints.on('>large', function () {
+        $sidebar.removeClass('inactive');
+    });
 	// Fixes.
 
 		// Object fit images.
